@@ -78,4 +78,6 @@ contract Auction {
     }
 //להוסיף RECIVE ולהתקן SELLER
 
+
+
 }
