@@ -1,58 +1,65 @@
 // SPDX-License-Identifier: MIT
 // https://solidity-by-example.org/defi/staking-rewards/
 // Code is a stripped down version of Synthetix
+pragma solidity ^0.8.24;
 
-pragma solidity ^0.8.20;
-import '../../lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol';
+import "../Auction/ERC721.sol";
 
-contract Auction {
-    struct bidder{
-        uint sum;
-        bool flag = true;
-        Seller seller;
-    }
+contract Auction{
+
     struct Seller{
-        address addressSeller;
-        IERC721 NFTtoken;
-        uint startTime;
-        uint endTime;
+        IERC721 NFTToken;
         uint tokenId;
-        uint startSum
+        uint startDate;
+        uint endAt;        
+        bool started;
     }
-    
-    mapping (address=>bidder) public bidders;
-    address[] public stack;
 
-    constructor(){
-        bidders[address(this)].sum = seller.startSum;
-        bidders[address(this)].flag = true;
-        stack.push(address(this));
-     }
-//פונקציה להצעה של מוכר למכירה פומבית
-    function createOfferToAuction(Seller seller) public {
-        seller.NFTtoken.transfer(seller.addressSeller,address(this),seller.tokenId);   
+    struct Bidder{
+        address bidAddr;
+        uint price;
     }
-    modifier checkTime(Seller seller)public{
-        require(block.timestamp > seller.endTime && block.timestamp < seller.startTime ,"The auction is closed");
-        _;
+
+    struct BiddersPerAuction{
+        Bidder prevBidder;
+        Bidder currBidder;
     }
-//פונקציה למשתמש להציע הצעה
-    function addBid(uint _sum, Seller seller) public payable checkTime(seller){
-        while(!bidders[stack[stack.length()-1]].flag){
-            stack.pop();
-        }
-        require(_sum < bidders[stack[stack.length()-1]].sum , "you cant to bid this sum");
-        bidders[msg.sender].sum = _sum;
-        //address(this).transfer(_sum);
-        stack.push(msg.sender);
+
+    mapping(address => Seller) public sellers;
+    mapping(address => BiddersPerAuction) public auctions;
+
+    event start(uint startDate, uint endAt);
+
+    receive() external payable {}
+
+    function initAuction(uint duration, IERC721 nft, uint tokenId, uint prePrice) external {
+        Seller memory seller;
+        seller.started = true;
+        seller.startDate = block.timestamp;
+        seller.endAt =  block.timestamp + duration;
+        seller.NFTToken = nft;
+        seller.tokenId = tokenId;
+        seller.NFTToken.transferFrom(msg.sender, address(this), seller.tokenId);
+        sellers[msg.sender] = seller; // new seller
+        auctions[msg.sender].currBidder.bidAddr = msg.sender; // new auction
+        auctions[msg.sender].currBidder.price = prePrice;
+        emit start(seller.startDate, seller.endAt);
     }
-    function removeBid(Seller seller) public checkTime(seller){
-        removeBidByOwner(seller,msg.sender)
+
+    function addBid(uint price, address sellerAddr) external {
+        require(sellers[sellerAddr].tokenId != 0, "incorrect address of seller"); // seller is exist
+        require(price > auctions[sellerAddr].currBidder.price, "price is low");
+        auctions[sellerAddr].prevBidder = auctions[sellerAddr].currBidder;
+        auctions[sellerAddr].currBidder.bidAddr = msg.sender;
+        auctions[sellerAddr].currBidder.price = price; 
+        // payable(address(this)).transfer(msg.sender, price);
     }
-    function removeBidByOwner(Seller seller,address addr) public payable checkTime(seller){
-        addr.transfer(bidders[addr].sum);
-        bidders[addr].sum = 0;
-        bidders[addr].flag = false;
+
+    function removeBid(address sellerAddr) external{
+        require(sellers[sellerAddr].tokenId != 0, "incorrect address of seller"); // seller is exist
+        require(auctions[sellerAddr].prevBidder.bidAddr == msg.sender, "you can't cancel bid");
+        // payable(msg.sender).transfer(auctions[sellerAddr].prevBidder.price);        
+        auctions[sellerAddr].prevBidder.bidAddr = address(0);
     }
     //החזרת כספים אחרי סיום
     function returnMoney(Seller seller) public{
@@ -77,7 +84,5 @@ contract Auction {
 
     }
 //להוסיף RECIVE ולהתקן SELLER
-
-
 
 }
