@@ -61,28 +61,15 @@ contract Auction{
         // payable(msg.sender).transfer(auctions[sellerAddr].prevBidder.price);        
         auctions[sellerAddr].prevBidder.bidAddr = address(0);
     }
-    //החזרת כספים אחרי סיום
-    function returnMoney(Seller seller) public{
-        while(stack.length() > 1)
-        {
-            if(bidders[stack[stack.length()-1]].flag ){
-               removeBidByOwner(seller,stack[stack.length()-1])
-            }
-            stack.pop();
-        }
-    }
-    //הבאה של NFT לזוכה
-    //+ העברת הכסף של הזוכה למוכר
-    function finishAuction(Seller seller) public {
-        while(!bidders[stack[stack.length()-1]].flag){
-            stack.pop();
-        }
-        require(stack.length()>1,"there is no bidders");
-        seller.addressSeller.transfer(bidders[stack[stack.length()-1]].sum);
-        seller.NFTtoken.transferFrom(seller.addressSeller,bidders[stack[stack.length()-1]],seller.tokenId);
-        returnMoney(seller);
 
+    function endAuction() external{
+        require(sellers[msg.sender].tokenId != 0, "incorrect address of seller"); // seller is exist
+        require(sellers[msg.sender].endAt <= block.timestamp, "auaction not finished!");        
+        address highestBid = auctions[msg.sender].currBidder.bidAddr;
+        require(highestBid != msg.sender, "the highest bid is the seller's bid");
+        // if (auctions[sellerAddr].prevBidder.bidAddr != address(0)){
+        //     payable(auctions[sellerAddr].prevBidder.bidAddr).transfer(auctions[sellerAddr].prevBidder.price);
+        // }
+        sellers[msg.sender].NFTToken.transferFrom(msg.sender,highestBid, sellers[msg.sender].tokenId);
     }
-//להוסיף RECIVE ולהתקן SELLER
-
 }
