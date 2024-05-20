@@ -1,0 +1,8 @@
+{
+    "importFilesToOrigRelpaths": {},
+    "primary_contract": "Empty",
+    "specfile": "/home/user/Documents/labs/src/certora/sisters.spec",
+    "specfileOrigRelpath": "sisters.spec",
+    "specfilesToImportDecls": {},
+    "type": "spec"
+}

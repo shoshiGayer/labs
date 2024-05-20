@@ -1,0 +1,28 @@
+{
+    "CLI_version": "7.6.3",
+    "branch": "master",
+    "certora_ci_client": null,
+    "conf": {
+        "files": [
+            "Empty.sol"
+        ],
+        "process": "emv",
+        "solc": "solc",
+        "verify": "Empty:sisters.spec"
+    },
+    "conf_path": null,
+    "cwd_relative": "src/certora",
+    "dirty": false,
+    "main_spec": "sisters.spec",
+    "origin": "git@github.com:shoshiGayer/labs.git",
+    "raw_args": [
+        "/home/user/.local/bin/certoraRun",
+        "Empty.sol",
+        "--verify",
+        "Empty:sisters.spec",
+        "--solc",
+        "solc"
+    ],
+    "revision": "a6761ee5f60e74f74040d437ad28a1bc455502be",
+    "timestamp": "1716179510.825827"
+}
