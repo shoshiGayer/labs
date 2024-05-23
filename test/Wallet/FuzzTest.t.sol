@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.15;
+
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "../../src/Wallet/Wallet.sol";
@@ -9,13 +10,11 @@ contract WalletFuzzTest is Test {
 
     function setUp() public {
         wallet = new Wallet();
-        //payable(address(wallet)).transfer(1000); 
+        //payable(address(wallet)).transfer(1000);
         console.log(address(wallet));
-
     }
-   
-     function fuzzTestReceive(uint256 amount) public {
-        
+
+    function fuzzTestReceive(uint256 amount) public {
         address randomAddress = vm.addr(1234); // create random address
         vm.startPrank(randomAddress); // send from random address
         vm.deal(randomAddress, amount); // put money in this wallet
@@ -38,7 +37,8 @@ contract WalletFuzzTest is Test {
         assertEq(finalBalance, initialBalance - amount);
         vm.stopPrank();
     }
-     function testNotAllowedWithdraw(address userAddress,uint8 amount) external {
+
+    function testNotAllowedWithdraw(address userAddress, uint8 amount) external {
         console.log(amount);
         console.log(userAddress);
         vm.startPrank(userAddress); // send from random address
@@ -50,19 +50,19 @@ contract WalletFuzzTest is Test {
         console.log(finalBalance);
         vm.stopPrank();
     }
-     function testUpdate(address newGabai) public{
-        console.log(newGabai,"new gabay");
+
+    function testUpdate(address newGabai) public {
+        console.log(newGabai, "new gabay");
         address oldGabai = 0x7a3b914a1f0bD991BAf826F4fE9a47Bb9880d25f;
         address userAddress = 0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496; // address of allowed user
         vm.startPrank(userAddress); // send from random address
-        if(wallet.gabaim(newGabai)==1){
+        if (wallet.gabaim(newGabai) == 1) {
             vm.expectRevert();
             wallet.update(oldGabai, newGabai);
-        }
-        else{
+        } else {
             wallet.update(oldGabai, newGabai);
-            assertEq(wallet.gabaim(newGabai),1);
-            assertEq(wallet.gabaim(oldGabai),0);     
+            assertEq(wallet.gabaim(newGabai), 1);
+            assertEq(wallet.gabaim(oldGabai), 0);
         }
         vm.stopPrank();
     }

@@ -6,15 +6,15 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "../src/Staking/Staking.sol";
 import "../src/audit/approve.sol";
+
 contract StakingTest is Test {
     Staking public staking;
     MyToken public myToken;
 
-
     function setUp() public {
         myToken = new MyToken();
         staking = new Staking();
-        myToken.mint(10**6);
+        myToken.mint(10 ** 6);
     }
 
     function testDeposit() public {
@@ -29,8 +29,8 @@ contract StakingTest is Test {
         vm.startPrank(userAddress);
         vm.deal(userAddress, 500);
         uint256 dateBefore7Days = block.timestamp - 604800;
-        uint256 sum=500;
-        staking.pushDatabase(dateBefore7Days,sum,userAddress);
+        uint256 sum = 500;
+        staking.pushDatabase(dateBefore7Days, sum, userAddress);
         uint256 initialPoolBalance = staking.stakingPool();
         uint256 initalUserBalance = staking.myToken().balanceOf(userAddress);
         staking.print(userAddress);
@@ -39,6 +39,6 @@ contract StakingTest is Test {
         uint256 finalPoolBalance = staking.stakingPool();
         assertEq(initialPoolBalance - 500, finalPoolBalance);
         //uint256 finalUserBalance = staking.myToken().balanceOf(userAddress);
-        assertEq(initalUserBalance - 500, finalPoolBalance - staking.calculateSum(500));  
+        assertEq(initalUserBalance - 500, finalPoolBalance - staking.calculateSum(500));
     }
 }

@@ -3,15 +3,15 @@ pragma solidity >=0.7.0 <0.9.0;
 contract Ballot {
     // Structs to define the contract
     struct Voter {
-        uint weight; 
-        bool voted;  
-        address delegate; 
-        uint vote;   
+        uint256 weight;
+        bool voted;
+        address delegate;
+        uint256 vote;
     }
 
     struct Proposal {
-        bytes32 name;   
-        uint voteCount; 
+        bytes32 name;
+        uint256 voteCount;
     }
 
     // The chairperson's address
@@ -23,30 +23,21 @@ contract Ballot {
     // Array of proposals
     Proposal[] public proposals;
 
-    // Constructor that initializes the chairperson to 1 and the proposals array 
+    // Constructor that initializes the chairperson to 1 and the proposals array
     constructor(bytes32[] memory proposalNames) {
         chairperson = msg.sender;
         voters[chairperson].weight = 1;
 
-        for (uint i = 0; i < proposalNames.length; i++) {
-            proposals.push(Proposal({
-                name: proposalNames[i],
-                voteCount: 0
-            }));
+        for (uint256 i = 0; i < proposalNames.length; i++) {
+            proposals.push(Proposal({name: proposalNames[i], voteCount: 0}));
         }
     }
 
     // Allow the chairperson to give vote to specific address
     // and check if he already voted
     function giveRightToVote(address voter) public {
-        require(
-            msg.sender == chairperson,
-            "Only chairperson can give right to vote."
-        );
-        require(
-            !voters[voter].voted,
-            "The voter already voted."
-        );
+        require(msg.sender == chairperson, "Only chairperson can give right to vote.");
+        require(!voters[voter].voted, "The voter already voted.");
         require(voters[voter].weight == 0, "Voter already has voting rights.");
         voters[voter].weight = 1;
     }
@@ -72,8 +63,8 @@ contract Ballot {
         }
     }
 
-    // Allow a voter to vote for a specific proposal 
-    function vote(uint proposal) public {
+    // Allow a voter to vote for a specific proposal
+    function vote(uint256 proposal) public {
         Voter storage sender = voters[msg.sender];
         require(sender.weight != 0, "Has no right to vote");
         require(!sender.voted, "Already voted");
@@ -84,9 +75,9 @@ contract Ballot {
     }
 
     // Iterates over all the proposals to compare their votes and return the winning proposal
-    function winningProposal() public view returns (uint winningProposal_) {
-        uint winningVoteCount = 0;
-        for (uint p = 0; p < proposals.length; p++) {
+    function winningProposal() public view returns (uint256 winningProposal_) {
+        uint256 winningVoteCount = 0;
+        for (uint256 p = 0; p < proposals.length; p++) {
             if (proposals[p].voteCount > winningVoteCount) {
                 winningVoteCount = proposals[p].voteCount;
                 winningProposal_ = p;
