@@ -1,5 +1,5 @@
 pragma solidity ^0.8.0;
-import "@hack/AMM/MyToken.sol"; // Importing your token contract
+import "../like/MyToken.sol";
 
 contract WalletDistributor {
     address public owner;

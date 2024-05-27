@@ -7,8 +7,9 @@ contract DivideContract{
     uint256 public totalAddress;
 
     constructor() {
-        totalParticipants = 0;
-        owner=msg.sender;
+        totalAddress = 0;
+        owner = payable(msg.sender);
+    }
        
      modifier onlyOwner(){
         require(
@@ -25,8 +26,8 @@ contract DivideContract{
         require(totalAddress > 0, "No Address");
         uint256 amountToDistribute = amount / totalAddress; 
         for (uint256 i = 0; i < totalAddress; i++) {
-            address peopleAddress = peopleAddresses[i];
-            owner.transfer(peopleAddress,amountToDistribute);
+            // address peopleAddress = peopleAddresses[i];
+            owner.transfer(amountToDistribute);
         }
 
 

@@ -3,7 +3,7 @@
 // Code is a stripped down version of Synthetix
 pragma solidity ^0.8.24;
 
-import "../Auction/ERC721.sol";
+import "./Nft.sol";
 
 contract Auction{
 

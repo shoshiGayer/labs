@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 
 contract Distribute {
 
-    address[30] public addresses = [
+    address[40] public addresses = [
         0xad0091676Fa9631e1A74fE12E4a34325D1EdEB84,
         0x7a3b914a1f0bD991BAf826F4fE9a47Bb9880d25f,
         0x057bB196e8f0326AFc453d2bcd1fCfCb4F879AfA,
