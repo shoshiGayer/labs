@@ -2,6 +2,7 @@
 // https://solidity-by-example.org/defi/staking-rewards/
 // Code is a stripped down version of Synthetix
 pragma solidity ^0.8.20;
+
 import "../like/IERC20.sol";
 import "forge-std/console.sol";
 import "../audit/approve.sol";
@@ -9,12 +10,12 @@ import "../audit/approve.sol";
 contract CP {
     IERC20 public immutable token0;
     IERC20 public immutable token1;
-    uint public reserve0;
-    uint public reserve1;
-    uint public totalSupply;
-    mapping(address => uint) public balances;
+    uint256 public reserve0;
+    uint256 public reserve1;
+    uint256 public totalSupply;
+    mapping(address => uint256) public balances;
 
-     constructor(address t0, address t1) {
+    constructor(address t0, address t1) {
         token0 = IERC20(t0);
         token1 = IERC20(t1);
     }

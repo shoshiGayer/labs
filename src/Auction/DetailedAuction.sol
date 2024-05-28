@@ -3,7 +3,8 @@
 // Code is a stripped down version of Synthetix
 
 pragma solidity ^0.8.20;
-import '../../lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol';
+
+import "../../lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
 
 contract Auction {
 //     struct bidder{
@@ -19,7 +20,7 @@ contract Auction {
 //         uint tokenId;
 //         uint startSum;
 //     }
-    
+
 //     mapping (address=>bidder) public bidders;
 //     address[] public stack;
 
@@ -30,7 +31,7 @@ contract Auction {
 //      }
 // //פונקציה להצעה של מוכר למכירה פומבית
 //     function createOfferToAuction(Seller memory seller) public {
-//         seller.NFTtoken.transfer(seller.addressSeller,address(this),seller.tokenId);   
+//         seller.NFTtoken.transfer(seller.addressSeller,address(this),seller.tokenId);
 //     }
 //     modifier checkTime(Seller memory seller) {
 //         require(block.timestamp > seller.endTime && block.timestamp < seller.startTime ,"The auction is closed");
@@ -77,5 +78,4 @@ contract Auction {
 
 //     }
 // //להוסיף RECIVE ולהתקן SELLER
-
 }
