@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 import "./interfaces/ISwapRouter.sol";
-import "./Math.sol";
+import "./math.sol";
 
 interface ILendingPool {
     function deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode) external;
