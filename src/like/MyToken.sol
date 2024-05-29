@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.20;
+
 import "forge-std/console.sol";
 import "./IERC20.sol";
-
 
 contract MyToken is IERC20 {
     uint256 public totalSupply;
@@ -26,7 +26,7 @@ contract MyToken is IERC20 {
     }
 
     function transferFrom(address from, address to, uint256 amount) external returns (bool) {
-        console.log("transferFrom" , msg.sender);
+        console.log("transferFrom", msg.sender);
         allowance[from][msg.sender] -= amount;
         balanceOf[from] -= amount;
         balanceOf[to] += amount;

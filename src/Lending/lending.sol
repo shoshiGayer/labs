@@ -125,14 +125,14 @@ contract Lending {
         require(borrowers[msg.sender].borrowedValue > 0, "not borrow");
         require(
             _amount - borrowers[msg.sender].borrowedValue == calculateFee(_amount),
-            "not enough fee"//+ calculateFee(_amount)
+            "not enough fee" //+ calculateFee(_amount)
         );
         daiToken.transferFrom(msg.sender, address(this), _amount); //return borrow + fee
         totalRewards += _amount - borrowers[msg.sender].borrowedValue;
         borrowers[msg.sender].borrowedValue -= _amount;
         totalDeposit += _amount - borrowers[msg.sender].borrowedValue;
 
-        fee=calculateFee(_amount);
+        fee = calculateFee(_amount);
         //return collaterals
     }
 }

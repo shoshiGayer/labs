@@ -2,14 +2,14 @@
 // https://solidity-by-example.org/defi/staking-rewards/
 // Code is a stripped down version of Synthetix
 pragma solidity ^0.8.20;
+
 import "forge-std/console.sol";
 import "forge-std/Test.sol";
 
 import "../../src/like/MyToken.sol";
 import "../../src/Amm/cp.sol";
 
-contract CPTest is Test{
-
+contract CPTest is Test {
     MyToken token0;
     MyToken token1;
     CP cp;
@@ -25,8 +25,7 @@ contract CPTest is Test{
 
     // }
     // function testSwap()public{
-    
-        
+
     //     uint amountOut = cp.swap(address(token0),20);
     //     console.log(token0.balanceOf(address(token0)),"balance of token0");
     //     console.log(token1.balanceOf(address(token1)),"balance of token1");

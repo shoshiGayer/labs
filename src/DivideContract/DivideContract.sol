@@ -1,36 +1,33 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-contract DivideContract{
+contract DivideContract {
     address payable public owner;
     address[] public peopleAddresses;
     uint256 public totalAddress;
 
     constructor() {
         totalAddress = 0;
-        owner=payable(msg.sender);
+        owner = payable(msg.sender);
     }
-       
-     modifier onlyOwner(){
-        require(
-            owner == msg.sender ,
-            "Only the owner allowed to distribute");
-            _;
+
+    modifier onlyOwner() {
+        require(owner == msg.sender, "Only the owner allowed to distribute");
+        _;
     }
-    function AddAddress() external  {
+
+    function AddAddress() external {
         peopleAddresses.push(msg.sender);
         totalAddress++;
     }
-    function Distribute(uint256 amount) external payable onlyOwner{
+
+    function Distribute(uint256 amount) external payable onlyOwner {
         require(totalAddress > 0, "No Address");
         require(totalAddress > 0, "No Address");
-        uint256 amountToDistribute = amount / totalAddress; 
+        uint256 amountToDistribute = amount / totalAddress;
         for (uint256 i = 0; i < totalAddress; i++) {
             address peopleAddress = peopleAddresses[i];
             owner.transfer(amountToDistribute);
         }
-
-
     }
-
 }
