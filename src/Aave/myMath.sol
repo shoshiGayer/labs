@@ -2,7 +2,7 @@ pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
-contract Math {
+contract MyMath {
     using Math for uint256;
 
     uint256 private constant EXP_SCALE = 1e18;
@@ -33,6 +33,19 @@ contract Math {
         assert(successDiv == true);
         return product;
     }
+    // function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    //     unchecked {
+    //         if (b > a) return (false, 0);
+    //         return (true, a - b);
+    //     }
+    // }
+    //  function tryAdd(uint256 a, uint256 b) internal pure returns (uint256) {
+    //     unchecked {
+    //         uint256 c = a + b;
+    //         if (c < a) return (false, 0);
+    //         return ( c);
+    //     }
+    // }
 
     function percentage(uint256 _num, uint256 _percentage)
         internal
