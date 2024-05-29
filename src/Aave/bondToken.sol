@@ -75,7 +75,7 @@ contract BondToken is  Ownable, MyMath {
     mapping(address => uint256) private usersCollateral;
     mapping(address => uint256) private usersBorrowed;
 
-    constructor() ERC20("Bond DAI", "bDAI") {}
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
     function bondAsset(uint256 _amount) external {
         dai.transferFrom(msg.sender, address(this), _amount);
