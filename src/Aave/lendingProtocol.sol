@@ -110,7 +110,8 @@ contract LendingProtocol is  Ownable, MyMath {
         uint256 wethPrice = uint256(_getLatestPrice());
         uint256 collateral = usersCollateral[msg.sender];
         require(collateral > 0, "Dont have any collateral");
-        uint256 borrowed = usersBorrowed[msg.sender];
+        uint256 borrowed = usersBorrowed[msg.sender
+        ];
         //uint256 amountLeft = mulExp(collateral, wethPrice).trySub(borrowed);
         uint256 collateralInUSDC=mulExp(collateral, wethPrice);
          (,uint256 amountLeft ) = collateralInUSDC.trySub(borrowed);
